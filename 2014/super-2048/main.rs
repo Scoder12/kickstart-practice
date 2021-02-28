@@ -37,17 +37,23 @@ macro_rules! read_vec {
     };
 }
 
-
-fn solve(n: u32, desc: &str, board: Vec<Vec<u32>>) {
+fn solve(n: i32, desc: &str, board: Vec<Vec<i32>>) {
     let (xdir, ydir) = match desc {
-        "up" => (0, 1),
-        "down" => (0, -1),
-        "left" => (-1, 0),
-        "right" => (1, 0),
+        "up" => (1, 1),
+        "down" => (1, -1),
+        "left" => (-1, 1),
+        "right" => (1, 1),
         _ => unreachable!()
     };
+    println!("n is {}", n);
 
-    
+    for i in 0..n {
+        for j in 0..n {
+            let x = (xdir * n) + j;
+            let y = (ydir * n) + i;
+            println!("{} {}: {} {}", i, j, x, y)
+        }
+    }
 }
 
 
@@ -56,16 +62,16 @@ fn main() {
     for t in 1..testcases + 1 {
         read_str!(desc);
         let words = desc.trim().split_whitespace().collect::<Vec<&str>>();
-        parse!(words[0] => n as u32);
+        parse!(words[0] => n as i32);
         let desc = words[1];
 
-        let mut board: Vec<Vec<u32>> = Vec::new();
+        let mut board: Vec<Vec<i32>> = Vec::new();
         for _ in 0..n {
-            read_vec!(row as u32);
+            read_vec!(row as i32);
             board.push(row);
         }
 
-        println!("Case #{}:", n);
+        println!("Case #{}:", t);
         solve(n, desc, board);
     }
 }
